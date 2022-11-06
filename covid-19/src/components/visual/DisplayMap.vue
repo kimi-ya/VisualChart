@@ -1,11 +1,5 @@
 <template>
-    <div class="center">
-        <div class="title">
-            <div class="text">新冠疫情最新数据展示</div>
-            <div class="time">截止时间 {{ store.list.lastUpdateTime }}</div>
-        </div>
-        <div id="china" class="box-center"></div>
-    </div>
+    <div id="china" class="box-center"></div>
 </template>
 
 <script lang='ts' setup>
@@ -15,26 +9,26 @@ import * as echarts from 'echarts'; //echarts5 导入方式
 import '../.././assets/china';
 import { geoCoordMap } from '../.././assets/geoMap';
 
-const store = useStore()
+const store = useStore();
 
 onMounted(async () => {
-    await store.getList()
-    initCharts()
+    await store.getList();
+    initCharts();
 })
 
 const initCharts = () => {
-    const city = store.list.areaTree[2].children
+    const city = store.list.areaTree[2].children;
 
     const data = city.map(v => {
         return {
             name: v.name, //省市
             value: geoCoordMap[v.name].concat(v.today.confirm), //经纬度
-            children: v.children
+            children: v.children,
         }
     })
 
     // 获取dom插入地图
-    const charts = echarts.init(document.querySelector('#china') as HTMLElement)
+    const charts = echarts.init(document.querySelector('#china') as HTMLElement);
 
     charts.setOption(
         {
@@ -146,40 +140,16 @@ const initCharts = () => {
         }
     )
 
+    charts.resize();
+
     charts.on('click', (e: any) => {
-        store.item = e.data.children //右边表格展示数据
+        store.item = e.data.children; //右边表格展示数据
     })
 }
 </script>
 
 <style lang='scss' scoped>
-.center {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
 .box-center {
-    flex: 1;
-    margin-top: -60px;
-}
-
-.title {
-    margin-top: 50px;
-    height: 100px;
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .text {
-        white-space: nowrap;
-        font-size: 48px;
-        margin-bottom: 5px;
-    }
-
-    .time {
-        font-size: 20px;
-    }
+    flex: 1; 
 }
 </style>

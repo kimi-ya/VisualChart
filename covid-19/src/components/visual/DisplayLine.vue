@@ -6,26 +6,26 @@
 import { useStore } from '../../store';
 import { onMounted } from 'vue';
 import * as echarts from 'echarts';
-const store = useStore()
+const store = useStore();
 
 onMounted(async () => {
-    await store.getList()
-    initLine()
+    await store.getList();
+    initLine();
 })
 
 const initLine = () => {
-    const charts = echarts.init(document.querySelector('.box-left-line') as HTMLElement)
+    const charts = echarts.init(document.querySelector('.box-left-line') as HTMLElement);
     charts.setOption({
         backgroundColor: '#223651',
         tooltip: {
-            trigger: 'axis'
+            trigger: 'axis',
         },
         xAxis: {
             type: 'category',
             data: store.cityDetail.map(v => v.name),
             axisLine: {
                 lineStyle: {
-                    color: '#fff'
+                    color: '#fff',
                 }
             }
         },
@@ -33,7 +33,7 @@ const initLine = () => {
             type: 'value',
             axisLine: {
                 lineStyle: {
-                    color: '#fff'
+                    color: '#fff',
                 }
             },
             axisLabel: {
@@ -49,13 +49,14 @@ const initLine = () => {
             },
         },
         label: {
-            show: true
+            show: true,
         },
         series: [
             {
+                name: '新增确诊',
                 data: store.cityDetail.map(v => v.today.confirm),
                 type: 'line',
-                smooth: true
+                smooth: true,
             }
         ]
     })
@@ -64,7 +65,6 @@ const initLine = () => {
 
 <style lang='scss' scoped>
 .box-left-line {
-    height: 320px;
-    margin-top: 20px;
+    height: 310px;
 }
 </style>

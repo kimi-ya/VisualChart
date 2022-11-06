@@ -47,11 +47,18 @@
 
 <script lang='ts' setup>
 import { useStore } from '../../store';
-const store = useStore()
+import { onMounted } from 'vue';
+
+onMounted(async () => {
+    await store.getList();
+})
+
+const store = useStore();
 </script>
 
 <style lang='scss' scoped>
 .box-left-card {
+    color: #fff;
     display: grid;
     grid-template-columns: auto auto auto;
     grid-template-rows: auto auto;

@@ -11,9 +11,9 @@
                     <th>死亡</th>
                 </tr>
             </thead>
-            <TransitionGroup enter-active-class="animate__animated animate__flipInY" tag="tbody">
-                <tr v-for="item in store.item" :key="item.id">
-                    <td align="center">{{ item?.name }}</td>
+            <TransitionGroup enter-active-class="animate__animated animate__flipInY" tag="tbody" class="content">
+                <tr v-for="item in tableData" :key="item.id" >
+                    <td  class="datas" align="center">{{ item?.name }}</td>
                     <!-- <td align="center">{{ item.lastUpdateTime }}</td> -->
                     <td align="center">{{ item.today?.confirm }}</td>
                     <td align="center">{{ item.total?.confirm }}</td>
@@ -26,19 +26,16 @@
 </template>
 
 <script lang='ts' setup>
-import { useStore } from '../.././store';
 import 'animate.css';
 
-const store = useStore()
+const props = defineProps<{ tableData: any[] }>();
 </script>
 
 <style lang='scss' scoped>
 .box-right {
-    width: 450px;
     color: #fff;
 
     .table {
-        width: 100%;
         background: #223651;
         border-color: #273345;
 
